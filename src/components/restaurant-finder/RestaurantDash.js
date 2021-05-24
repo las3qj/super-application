@@ -9,9 +9,7 @@ import ReactMapGL, {Marker} from 'react-map-gl';
 const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_api_key;
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_api_key;
 
-function RestaurantDash(){
-    const [address, setAddress] = useState("119 Washington Avenue Charlottesville VA");
-    const [coord, setCoord] = useState({lat: 38.026, lon: -78.535});
+function RestaurantDash({coord, address, setAddress, updateAddress}){
     const [restaurants, setRestaurants] = useState([]);
     const [currType, setCurrType] = useState("restaurant");
     const [currRadius, setCurrRadius] = useState(0);
@@ -27,7 +25,10 @@ function RestaurantDash(){
         const getAPI = async () => {
             await getCoord().then(resp => {
                 if(resp.results.length>0) {
-                    setCoord({lat: resp.results[0].geometry.location.lat, lon: resp.results[0].geometry.location.lng});
+                    const coord = {lat: resp.results[0].geometry.location.lat, lon: resp.results[0].geometry.location.lng};
+                    
+                    const zip = resp.results[0].address_components[resp.results[0].address_components.length-1].long_name;
+                    updateAddress(coord, zip);
                     setViewport({...viewport, 
                         latitude: resp.results[0].geometry.location.lat, longitude: resp.results[0].geometry.location.lng});
                 }
@@ -36,7 +37,7 @@ function RestaurantDash(){
         }
         const getCoord = async () => {
             const url = new URL("https://maps.googleapis.com/maps/api/geocode/json");
-            url.searchParams.append("address", address);
+            url.searchParams.append("address", address.street+" "+address.city+" "+address.state);
             url.searchParams.append("key", GOOGLE_KEY);
 
             return fetch(url)
@@ -60,11 +61,11 @@ function RestaurantDash(){
 
         }
         getAPI();
-    }, [address, currType, currRadius]);
+    }, [address, updateAddress, currType, currRadius, coord]);
 
     return(
         <Container>
-            <SearchBar updateAddress={setAddress}></SearchBar>
+            <SearchBar address={address} updateAddress={setAddress}></SearchBar>
             <Row>
                 <RestaurantList restaurants={restaurants} setType={setCurrType} setRadius={setCurrRadius}/>
                 <Col>
