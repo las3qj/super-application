@@ -1,8 +1,4 @@
-import {useState, useEffect} from "react";
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
+import {Row, Col, InputGroup, FormControl} from 'react-bootstrap';
 
 function SearchBar({address, updateAddress}) {
 

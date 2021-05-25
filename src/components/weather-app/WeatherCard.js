@@ -1,7 +1,4 @@
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { Typography, makeStyles, Card, CardContent } from '@material-ui/core';
 import '../../css/weather-icons.css'
 const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 const ICONS = ["wi wi-day-thunderstorm", "wi wi-day-showers", "wi wi-day-rain", "wi wi-day-snow", 
@@ -65,7 +62,7 @@ const getIcon = (weather) => {
       return ICONS[3];
     case "Clear":
       return ICONS[4];
-    case "Clouds":
+    default:
       return ICONS[5];
   }
 }

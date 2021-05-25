@@ -2,9 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import WeatherCard from "./WeatherCard";
 import WeatherBox from "./WeatherBox";
 import {LocationContext} from "./../../contexts/locationContext";
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import {Button, TextField, Grid} from '@material-ui/core';
 import Container from 'react-bootstrap/Container';
 import { ThemeContext } from "../../contexts/themeContext";
 const API_KEY = process.env.REACT_APP_WEATHER_api_key;
@@ -85,7 +83,6 @@ function WeatherDash() {
             </WeatherBox>
         </Container>
     );
-    //<pre>{JSON.stringify(weather, undefined, 4)}</pre>
 }
 
 export default WeatherDash;

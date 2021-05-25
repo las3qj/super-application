@@ -1,6 +1,4 @@
-import Card from 'react-bootstrap/Card';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
+import {Card, Button} from 'react-bootstrap';
 import {ThemeContext} from './../../contexts/themeContext';
 import { useContext } from 'react';
 

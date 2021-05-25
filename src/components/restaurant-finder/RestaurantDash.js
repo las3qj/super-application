@@ -3,9 +3,7 @@ import RestaurantList from './RestaurantList';
 import SearchBar from './SearchBar';
 import {LocationContext} from "./../../contexts/locationContext";
 import {ThemeContext} from "./../../contexts/themeContext";
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import {Col, Row, Container} from 'react-bootstrap';
 import ReactMapGL, {Marker} from 'react-map-gl';
 
 const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_api_key;

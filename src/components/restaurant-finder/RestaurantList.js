@@ -1,9 +1,6 @@
 import {useState, useEffect, useContext} from "react";
 import ListItem from './ListItem';
-import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import {Dropdown, Button, Row, Col} from 'react-bootstrap';
 import {ThemeContext} from './../../contexts/themeContext';
 
 function RestaurantList({restaurants, setType, setRadius}) {
