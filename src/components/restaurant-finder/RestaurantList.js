@@ -1,9 +1,10 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import ListItem from './ListItem';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import {ThemeContext} from './../../contexts/themeContext';
 
 function RestaurantList({restaurants, setType, setRadius}) {
     const [currTypeFilter, setCurrTypeFilter] = useState("Restaurants");
@@ -11,6 +12,8 @@ function RestaurantList({restaurants, setType, setRadius}) {
     const [currSort, setCurrSort] = useState("None");
 
     const sortFunct = (fE, sE, propName, dec) => fE[propName]===undefined || sE[propName] > fE[propName]?dec*1:dec*-1;
+
+    const {darkTheme} = useContext(ThemeContext);
 
     useEffect(() => {
         switch(currTypeFilter) {
@@ -47,11 +50,11 @@ function RestaurantList({restaurants, setType, setRadius}) {
         <Col>
             <Row style={{margin: 10}}>
                 <Col>
-                    <h5>Filter..</h5>
+                    <h5 style={darkTheme?{color:"white"}:{}}>Filter..</h5>
                 </Col>
                 <Col>
                     <Dropdown>
-                        <Dropdown.Toggle variant="primary" id="dropdown-type-filter">
+                        <Dropdown.Toggle variant={darkTheme?"secondary":"primary"} id="dropdown-type-filter">
                             {currTypeFilter}
                         </Dropdown.Toggle>
 
@@ -64,7 +67,7 @@ function RestaurantList({restaurants, setType, setRadius}) {
                 </Col>
                 <Col>
                     <Dropdown>
-                        <Dropdown.Toggle variant="primary" id="dropdown-dist-filter">
+                        <Dropdown.Toggle variant={darkTheme?"secondary":"primary"} id="dropdown-dist-filter">
                             {currDistFilter}
                         </Dropdown.Toggle>
 
@@ -79,7 +82,7 @@ function RestaurantList({restaurants, setType, setRadius}) {
             </Row>
             <Row style={{margin: 10}}>
                 <Col>
-                    <h5>Sort by..</h5>
+                    <h5 style={darkTheme?{color:"white"}:{}}>Sort by..</h5>
                 </Col>
                 {["Name","Pricing","Rating"].map((propName) => {
                     return(
@@ -106,10 +109,11 @@ function RestaurantList({restaurants, setType, setRadius}) {
 }
 
 function SortingButton({propName, currSort, setCurrSort}) {
+    const {darkTheme} = useContext(ThemeContext);
     return(
         <Button onClick={()=>setCurrSort(currSort.substr(0,2)!==propName.substr(0,2)?propName.substr(0,2)+"-I":
             currSort.substr(3,1)==="I"?propName.substr(0,2)+"-D":"None")}
-            variant={currSort.substr(0,2)===propName.substr(0,2)?"secondary":"outline-secondary"}>
+            variant={currSort.substr(0,2)===propName.substr(0,2)?(darkTheme?"light":"secondary"):darkTheme?"outline-light":"outline-secondary"}>
             {propName} {currSort===propName.substr(0,2)+"-I"?"^":currSort===propName.substr(0,2)+"-D"?"v":""}
         </Button>
     )

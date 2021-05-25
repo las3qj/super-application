@@ -2,6 +2,7 @@ import {useState, useEffect, useContext} from "react";
 import RestaurantList from './RestaurantList';
 import SearchBar from './SearchBar';
 import {LocationContext} from "./../../contexts/locationContext";
+import {ThemeContext} from "./../../contexts/themeContext";
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -22,6 +23,7 @@ function RestaurantDash(){
         zoom: 12
       });
     const {coord, address, setAddress, updateAddressCoordZip} = useContext(LocationContext);
+    const {darkTheme} = useContext(ThemeContext);
 
     useEffect(() => {
         const getAPI = async () => {
@@ -66,7 +68,7 @@ function RestaurantDash(){
     }, [address, currType, currRadius]);
 
     return(
-        <Container>
+        <Container style={darkTheme?{background: "#484c54"}:{}}>
             <SearchBar address={address} updateAddress={setAddress}></SearchBar>
             <Row>
                 <RestaurantList restaurants={restaurants} setType={setCurrType} setRadius={setCurrRadius}/>

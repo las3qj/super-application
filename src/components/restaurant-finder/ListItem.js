@@ -1,11 +1,14 @@
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
+import {ThemeContext} from './../../contexts/themeContext';
+import { useContext } from 'react';
 
 function ListItem({restaurant}) {
     const rating = restaurant.rating || "?";
     const dirRef = "https://www.google.com/maps/search/?api=1&query="+
         restaurant.geometry.location.lat+","+restaurant.geometry.location.lng;
+    const {darkTheme} = useContext(ThemeContext);
 
     let pricing = "";
     if(restaurant.price_level===undefined) {
@@ -16,14 +19,14 @@ function ListItem({restaurant}) {
     }
 
     return(
-        <Card bg="light">
+        <Card bg={darkTheme?"dark":"light"}>
             <Card.Body>
-                <Card.Title>{restaurant.name}</Card.Title>
-                <Card.Text>
+                <Card.Title style={darkTheme?{color:"white"}:{}}>{restaurant.name}</Card.Title>
+                <Card.Text style={darkTheme?{color:"white"}:{}}>
                     {rating} / 5.0 <br/>
                     {pricing}
                 </Card.Text>
-                <Button variant="primary" href={dirRef}>Get Directions</Button>
+                <Button variant={darkTheme?"secondary":"primary"} href={dirRef}>Get Directions</Button>
             </Card.Body>
         </Card>
 
