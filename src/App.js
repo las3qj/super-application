@@ -16,17 +16,17 @@ function App() {
     <div style={darkTheme?{background: "#484c54"}:{}}>
       <LocationProvider>
         <NavBar/>
-        <Switch>
-            <Route path='/' render={() => (
-                <Home/>)} exact/>
-            <Route path='/weather' render={() => (
-                <WeatherDash/>)}
-            />
-            <Route path='/restaurants' render={() => (
-                <RestaurantDash/>)}
-            />
-            <Route component={Error} />
-        </Switch>
+          <Switch>
+              <Route path='/' render={() => (
+                  <Home/>)} exact/>
+              <Route path='/weather' render={() => (
+                  <WeatherDash/>)}
+              />
+              <Route path='/restaurants' render={() => (
+                  <RestaurantDash/>)}
+              />
+              <Route component={Error} />
+          </Switch>
       </LocationProvider>
     </div>
   );

@@ -5,6 +5,8 @@ import {LocationContext} from "./../../contexts/locationContext";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Container from 'react-bootstrap/Container';
+import { ThemeContext } from "../../contexts/themeContext";
 const API_KEY = process.env.REACT_APP_WEATHER_api_key;
 
 function WeatherDash() {
@@ -14,8 +16,8 @@ function WeatherDash() {
     const [daily, setDaily] = useState(true);
     const handleChange = (event) => {
         setSearch(event.target.value);
-        
     }
+    const {darkTheme} = useContext(ThemeContext);
     useEffect(() => {
         const getAPI = async () => {
             const comma = search.indexOf(",");
@@ -64,8 +66,8 @@ function WeatherDash() {
 
     let weathers = weather===null ? null : daily ? weather.daily : weather.hourly;
     return(
-        <div style={{ textAlign: "center" }}>
-            <TextField id="standard-basic" label="zip or city" value={search || ""} onChange={handleChange}/>
+        <Container style={{ textAlign: "center" }}>
+            <TextField id="standard-basic" label="zip or city" value={search || ""} onChange={handleChange} style={darkTheme?{color:"white"}:{}}/>
             <br/>
             <br/>
             <Button variant="contained" color={daily?"primary":"default"} onClick={()=>setDaily(true)}>Daily</Button>
@@ -81,7 +83,7 @@ function WeatherDash() {
                     );
                 })}
             </WeatherBox>
-        </div>
+        </Container>
     );
     //<pre>{JSON.stringify(weather, undefined, 4)}</pre>
 }
