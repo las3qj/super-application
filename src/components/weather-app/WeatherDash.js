@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import WeatherCard from "./WeatherCard";
 import WeatherBox from "./WeatherBox";
+import {LocationContext} from "./../../contexts/locationContext";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 const API_KEY = process.env.REACT_APP_WEATHER_api_key;
 
-function WeatherDash({coord, updateAddress}) {
+function WeatherDash() {
+    const {coord, updateZipCoord} = useContext(LocationContext);
     const [search, setSearch] = useState(coord.lat+","+coord.lon);
     const [weather, setWeather] = useState(null);
     const [daily, setDaily] = useState(true);
@@ -22,7 +24,7 @@ function WeatherDash({coord, updateAddress}) {
             if(comma<0||isNaN(lat)||isNaN(lon)){
                 await getCoord().then(resp => {
                     if(resp.cod===200){
-                        updateAddress(search, resp.coord);
+                        updateZipCoord(search, resp.coord);
                     }
                     return(getWeather(resp.coord));
                 }).then(res => setWeather(res)).catch(e => {return;});
@@ -57,7 +59,7 @@ function WeatherDash({coord, updateAddress}) {
         }
         getAPI();
 
-      }, [search, updateAddress]);
+      }, [search]);
 
 
     let weathers = weather===null ? null : daily ? weather.daily : weather.hourly;

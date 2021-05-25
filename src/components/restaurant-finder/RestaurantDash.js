@@ -1,6 +1,7 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext} from "react";
 import RestaurantList from './RestaurantList';
 import SearchBar from './SearchBar';
+import {LocationContext} from "./../../contexts/locationContext";
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -9,7 +10,7 @@ import ReactMapGL, {Marker} from 'react-map-gl';
 const GOOGLE_KEY = process.env.REACT_APP_GOOGLE_api_key;
 const MAPBOX_TOKEN = process.env.REACT_APP_MAPBOX_api_key;
 
-function RestaurantDash({coord, address, setAddress, updateAddress}){
+function RestaurantDash(){
     const [restaurants, setRestaurants] = useState([]);
     const [currType, setCurrType] = useState("restaurant");
     const [currRadius, setCurrRadius] = useState(0);
@@ -20,6 +21,7 @@ function RestaurantDash({coord, address, setAddress, updateAddress}){
         longitude: -78.535,
         zoom: 12
       });
+    const {coord, address, setAddress, updateAddressCoordZip} = useContext(LocationContext);
 
     useEffect(() => {
         const getAPI = async () => {
@@ -28,7 +30,7 @@ function RestaurantDash({coord, address, setAddress, updateAddress}){
                     const coord = {lat: resp.results[0].geometry.location.lat, lon: resp.results[0].geometry.location.lng};
                     
                     const zip = resp.results[0].address_components[resp.results[0].address_components.length-1].long_name;
-                    updateAddress(coord, zip);
+                    updateAddressCoordZip(coord, zip);
                     setViewport({...viewport, 
                         latitude: resp.results[0].geometry.location.lat, longitude: resp.results[0].geometry.location.lng});
                 }
@@ -61,7 +63,7 @@ function RestaurantDash({coord, address, setAddress, updateAddress}){
 
         }
         getAPI();
-    }, [address, updateAddress, currType, currRadius, coord]);
+    }, [address, currType, currRadius]);
 
     return(
         <Container>

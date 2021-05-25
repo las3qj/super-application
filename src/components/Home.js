@@ -1,4 +1,8 @@
-function Home({coord}) {
+import {LocationContext} from "./../contexts/locationContext";
+import React, { useContext } from "react";
+
+function Home() {
+    const {coord} = useContext(LocationContext);
     return(
         <div style={{ textAlign: "center" }}>
             <h1>Welcome to Weather Checker / Restaurant Finder</h1>
