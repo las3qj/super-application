@@ -21,7 +21,7 @@ function LocationProvider({children}) {
             const fComma = formatted.indexOf(",");
             const street = formatted.substr(0, fComma);
             const sComma = formatted.indexOf(",", fComma+1);
-            const city = formatted.substr(fComma+2, sComma-fComma-1);
+            const city = formatted.substr(fComma+2, sComma-fComma-2);
             const state = formatted.substr(sComma+2, 2);
             setAddress({street: street, city: city, state: state});
         });
